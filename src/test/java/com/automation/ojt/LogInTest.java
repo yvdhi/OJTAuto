@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 
 public class LogInTest {
     private WebDriver driver;
-    private LoginPage loginPage;
+    private LogInPage loginPage;
 
     @BeforeMethod
     public void setUp() {
@@ -29,12 +29,27 @@ public class LogInTest {
     }
 
     @Test
-    public void login() {
-        loginPage = new LoginPage(driver);
+    public void EmployerLogin() {
+        loginPage = new LogInPage(driver);
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
         // input login credential
         loginPage.loginEmail.sendKeys("testemployeer1@email.com");
+        loginPage.loginPassword.sendKeys("admin123456789");
+        loginPage.loginSubmit.click();
+
+        // verify user success login
+        WebElement myJobPage = loginPage.myJobPage;
+        assertEquals(myJobPage.getText(), "PEKERJAAN AKTIF ANDA");
+    }
+
+    @Test
+    public void WorkerLogin() {
+        loginPage = new LogInPage(driver);
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+
+        // input login credential
+        loginPage.loginEmail.sendKeys("iamcaptainnow@email.com");
         loginPage.loginPassword.sendKeys("admin123456789");
         loginPage.loginSubmit.click();
 
