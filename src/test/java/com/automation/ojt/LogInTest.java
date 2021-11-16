@@ -12,14 +12,14 @@ import java.util.concurrent.TimeUnit;
 
 public class LogInTest {
     private WebDriver driver;
-    private LogInPage loginPage;
+    private PageObject PageObject;
 
     @BeforeMethod
     public void setUp() {
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
         driver.manage().window().maximize();
-        driver.get("http://kerjain-team1.herokuapp.com/");
+        driver.get("https://kerjain-team1.herokuapp.com/");
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
@@ -30,31 +30,29 @@ public class LogInTest {
 
     @Test
     public void EmployerLogin() {
-        loginPage = new LogInPage(driver);
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        PageObject = new PageObject(driver);
 
         // input login credential
-        loginPage.loginEmail.sendKeys("testemployeer1@email.com");
-        loginPage.loginPassword.sendKeys("admin123456789");
-        loginPage.loginSubmit.click();
+        PageObject.loginEmail.sendKeys("testemployeer1@email.com");
+        PageObject.loginPassword.sendKeys("admin123456789");
+        PageObject.loginSubmit.click();
 
         // verify user success login
-        WebElement myJobPage = loginPage.myJobPage;
+        WebElement myJobPage = PageObject.myJobPage;
         assertEquals(myJobPage.getText(), "PEKERJAAN AKTIF ANDA");
     }
 
     @Test
     public void WorkerLogin() {
-        loginPage = new LogInPage(driver);
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        PageObject = new PageObject(driver);
 
         // input login credential
-        loginPage.loginEmail.sendKeys("iamcaptainnow@email.com");
-        loginPage.loginPassword.sendKeys("admin123456789");
-        loginPage.loginSubmit.click();
+        PageObject.loginEmail.sendKeys("iamcaptainnow@email.com");
+        PageObject.loginPassword.sendKeys("admin123456789");
+        PageObject.loginSubmit.click();
 
         // verify user success login
-        WebElement myJobPage = loginPage.myJobPage;
+        WebElement myJobPage = PageObject.myJobPage;
         assertEquals(myJobPage.getText(), "PEKERJAAN AKTIF ANDA");
     }
 }

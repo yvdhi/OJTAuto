@@ -13,21 +13,21 @@ import static org.testng.Assert.assertEquals;
 
 public class DetailPageTest {
     private WebDriver driver;
-    private DetailPage DetailPage;
+    private PageObject PageObject;
 
     @BeforeMethod
     public void setUp() {
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
         driver.manage().window().maximize();
-        driver.get("http://kerjain-team1.herokuapp.com/");
+        driver.get("https://kerjain-team1.herokuapp.com/");
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
         // user login
-        DetailPage = new DetailPage(driver);
-        DetailPage.loginEmail.sendKeys("testemployeer1@email.com");
-        DetailPage.loginPassword.sendKeys("admin123456789");
-        DetailPage.loginSubmit.click();
+        PageObject = new PageObject(driver);
+        PageObject.loginEmail.sendKeys("testemployeer1@email.com");
+        PageObject.loginPassword.sendKeys("admin123456789");
+        PageObject.loginSubmit.click();
     }
 
     @AfterMethod
@@ -37,26 +37,25 @@ public class DetailPageTest {
 
     @Test
     public void openWorkerDetail() throws InterruptedException {
-        DetailPage = new DetailPage(driver);
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        PageObject = new PageObject(driver);
 
         // open worker listing page
-        if(DetailPage.WorkerMenu.isDisplayed()) {
-            DetailPage.WorkerListing.click();
+        if(PageObject.WorkerMenu.isDisplayed()) {
+            PageObject.WorkerListing.click();
         }
         Thread.sleep(3000);
 
         // scroll worker list
-         WebElement selectWorker = DetailPage.WorkerSelect;
+         WebElement selectWorker = PageObject.WorkerSelect;
          Actions a = new Actions(driver);
                 a.moveToElement(selectWorker);
                 a.perform();
 
         // open worker detail
-        DetailPage.WorkerDetail.click();
+        PageObject.WorkerDetail.click();
 
         // verify selected worker displayed
-        WebElement workerName = DetailPage.WorkerName;
+        WebElement workerName = PageObject.WorkerName;
         assertEquals("Nebula", workerName.getText());
     }
 }
